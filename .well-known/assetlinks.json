@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "kg.nsw.nsw",
+      "sha256_cert_fingerprints": [
+        "0F:00:12:37:B1:6E:67:40:C1:6F:A5:04:82:0E:7F:73:5D:37:AB:DA:E6:DF:B7:94:6D:A1:C5:F4:E0:92:0E:07"
+      ]
+    }
+  }
+]
