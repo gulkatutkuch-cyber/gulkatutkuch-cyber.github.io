@@ -5,6 +5,7 @@
   без приложения — эта страница: данные из Supabase (только то, что открыто гостям) и кнопка «Открыть в приложении».
   Исходник — в закрытом репозитории NSW (site/), публикуется скриптом site/publish.py:
   https://kpfwgftvbkshnvwjbvri.supabase.co и sb_publishable_1iJVKOR9MCsFhJT7Xu7hQw_M7_BwYNu (публичный ключ, как в приложении) подставляются из env.json.
+  Оформление — как в приложении (lib/theme.dart): Onest, зелёный и лайм, белые карточки без рамок.
 -->
 <html lang="ru">
 <head>
@@ -14,35 +15,68 @@
 <meta name="description" content="Цехи, заказы и вакансии швейной отрасли Кыргызстана">
 <meta property="og:title" content="Швейная сеть КР">
 <meta property="og:description" content="Цехи, заказы и вакансии швейной отрасли Кыргызстана">
-<meta name="theme-color" content="#F98012">
+<meta name="theme-color" content="#F3F4EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101311" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #F98012; --on-primary: #fff; --bg: #F7F5F2; --surface: #fff;
-    --text: #1F1B16; --muted: #6E655C; --border: #E6E0D8; --sand: #F4A460;
+    --primary: #1E7B4E; --on-primary: #fff; --accent: #C9F24D; --ink: #161A17;
+    --bg: #F3F4EF; --surface: #fff; --field: #EDF0E9; --text: #161A17; --muted: #6D736C; --border: #E2E6DE;
+    --tint: #E3F2E8; --on-tint: #145C39;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #17140F; --surface: #221E18; --text: #F2EDE6; --muted: #B3A99E; --border: #3A342C; }
+    :root {
+      --primary: #2E9A64; --bg: #101311; --surface: #1A1F1B; --field: #232924; --text: #EEF1EC; --muted: #A3AAA2;
+      --border: #2B312C; --tint: #1F3328; --on-tint: #9BD8B2;
+    }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  header { background: var(--primary); color: var(--on-primary); padding: 14px 16px; font-weight: 600; font-size: 18px; }
-  main { max-width: 560px; margin: 0 auto; padding: 16px; }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; overflow-wrap: anywhere; }
-  .card img { width: 100%; max-height: 260px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; display: block; }
-  h1 { font-size: 22px; margin: 0 0 4px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.45 Onest, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 560px; margin: 0 auto; padding: 8px 16px 32px; }
+  .brand { display: flex; align-items: center; gap: 12px; max-width: 560px; margin: 0 auto; padding: 20px 16px 12px; }
+  .logo { width: 44px; height: 44px; border-radius: 14px; background: var(--accent); display: grid; place-items: center; flex: none; }
+  .logo svg { width: 26px; height: 26px; fill: var(--ink); }
+  .brand b { display: block; font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+  .brand small { color: var(--muted); font-size: 13px; }
+  .card { background: var(--surface); border-radius: 24px; padding: 20px; margin-bottom: 12px; overflow-wrap: anywhere; }
+  .card > img { width: calc(100% + 40px); margin: -20px -20px 16px; max-height: 280px; object-fit: cover; display: block; border-radius: 24px 24px 0 0; }
+  h1 { font-size: 26px; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; }
   .muted { color: var(--muted); }
-  .row { margin: 6px 0; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .chip { border: 1px solid var(--border); border-radius: 16px; padding: 2px 10px; font-size: 14px; }
-  .badge { display: inline-block; background: var(--sand); color: #1F1B16; border-radius: 4px; padding: 0 6px; font-size: 13px; margin-left: 6px; vertical-align: middle; }
-  .btn { display: block; text-align: center; text-decoration: none; border-radius: 24px; padding: 12px 16px; font-weight: 600; margin-top: 10px; }
+  .facts { display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; margin: 16px 0 4px; }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; font-weight: 500; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .chip { background: var(--tint); color: var(--on-tint); border-radius: 100px; padding: 4px 12px; font-size: 14px; font-weight: 500; }
+  .pill { display: inline-block; border-radius: 100px; padding: 3px 10px; font-size: 13px; font-weight: 600; vertical-align: middle; }
+  .pill.lime { background: var(--accent); color: var(--ink); }
+  .pill.green { background: var(--primary); color: var(--on-primary); }
+  h1 .pill { margin-left: 8px; position: relative; top: -3px; }
+  .status { margin-bottom: 10px; }
+  .rating { color: var(--primary); font-weight: 600; }
+  .btn {
+    display: flex; align-items: center; justify-content: center; min-height: 52px; text-decoration: none;
+    border-radius: 100px; padding: 12px 20px; font-weight: 600; margin-top: 12px; text-align: center;
+  }
   .btn.primary { background: var(--primary); color: var(--on-primary); }
-  .btn.outline { border: 1px solid var(--primary); color: var(--primary); }
-  .note { font-size: 14px; }
+  .btn.outline { border: 1.5px solid var(--border); color: var(--text); }
+  .card > .btn:first-of-type { margin-top: 20px; }
+  .note { font-size: 14px; margin: 12px 0 0; }
+  .about { background: var(--tint); color: var(--on-tint); font-size: 14px; }
+  p { margin: 12px 0 0; }
 </style>
 </head>
 <body>
-<header>Швейная сеть КР · Тигүү тармагы</header>
+<div class="brand">
+  <div class="logo" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M21.6 18.2 13 11.75v-.91c1.65-.49 2.8-2.17 2.43-4.05-.26-1.31-1.3-2.4-2.61-2.7C10.54 3.57 8.5 5.3 8.5 7.5h2c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5c0 .84-.69 1.52-1.53 1.5-.54-.01-.97.45-.97.99v1.76L2.4 18.2c-.77.58-.36 1.8.6 1.8h18c.96 0 1.37-1.22.6-1.8zM6 18l6-4.5 6 4.5H6z"/></svg>
+  </div>
+  <div><b>Швейная сеть КР</b><small>Тигүү тармагы</small></div>
+</div>
 <main id="app"><div class="card muted">Загрузка…</div></main>
 <script>
 const SUPABASE_URL = 'https://kpfwgftvbkshnvwjbvri.supabase.co';
@@ -73,6 +107,11 @@ const label = (map, k) => map[k] || k;
 const money = (n) => Number(n).toLocaleString('ru-RU') + ' сом';
 const date = (s) => new Date(s + 'T00:00:00').toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 
+// Таблица «подпись — значение», как в карточке заказа в приложении; пустые строки пропускаются.
+function facts(rows) {
+  return el('dl', { class: 'facts' }, rows.filter(([, v]) => v != null && v !== '').flatMap(([k, v]) => [el('dt', {}, k), el('dd', {}, v)]));
+}
+
 async function rest(path) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { headers: { apikey: SUPABASE_KEY } });
   if (!res.ok) throw new Error(res.status);
@@ -80,9 +119,9 @@ async function rest(path) {
 }
 
 // Открыть то же самое в приложении: схема nsw:// (запасной путь, если App Links не сработали).
-function openAppButton(query) {
+function openAppButton(query, style = 'primary') {
   const fallback = encodeURIComponent(location.href);
-  return el('a', { class: 'btn primary', href: `intent://open?${query}#Intent;scheme=nsw;package=${PACKAGE};S.browser_fallback_url=${fallback};end` },
+  return el('a', { class: `btn ${style}`, href: `intent://open?${query}#Intent;scheme=nsw;package=${PACKAGE};S.browser_fallback_url=${fallback};end` },
     'Открыть в приложении');
 }
 
@@ -94,7 +133,7 @@ function notFound(title) {
 }
 
 function about() {
-  return el('div', { class: 'card note muted' },
+  return el('div', { class: 'card about' },
     'Швейная сеть КР — приложение для цехов и заказчиков Кыргызстана: каталог цехов, заказы, отклики, вакансии. ',
     'Приложение для Android скоро появится в Google Play.');
 }
@@ -105,10 +144,12 @@ async function workshop(id) {
   document.title = `${w.name} — Швейная сеть КР`;
   show(el('div', { class: 'card' },
       w.photos && w.photos[0] ? el('img', { src: w.photos[0], alt: '' }) : null,
-      el('h1', {}, w.name, w.verified ? el('span', { class: 'badge' }, 'Проверен') : null),
+      el('h1', {}, w.name, w.verified ? el('span', { class: 'pill green' }, '✓ Проверен') : null),
       el('div', { class: 'muted' }, [w.city, w.address].filter(Boolean).join(', ')),
-      w.reviews_count > 0 ? el('div', { class: 'row' }, `★ ${Number(w.rating).toFixed(1)} · отзывов: ${w.reviews_count}`) : null,
-      w.min_order ? el('div', { class: 'row' }, `Минимальная партия: ${w.min_order} ед.`) : null,
+      facts([
+        ['Рейтинг', w.reviews_count > 0 ? el('span', { class: 'rating' }, `★ ${Number(w.rating).toFixed(1)}`, el('span', { class: 'muted' }, ` · отзывов: ${w.reviews_count}`)) : 'пока нет отзывов'],
+        ['Мин. партия', w.min_order ? `${w.min_order} ед.` : null],
+      ]),
       w.description ? el('p', {}, w.description) : null,
       el('div', { class: 'chips' }, (w.specializations || []).map((s) => el('span', { class: 'chip' }, label(SPECS, s)))),
       openAppButton(`w=${id}`),
@@ -122,12 +163,15 @@ async function order(id) {
   document.title = `${o.title} — Швейная сеть КР`;
   show(el('div', { class: 'card' },
       o.photos && o.photos[0] ? el('img', { src: o.photos[0], alt: '' }) : null,
+      el('div', { class: 'status' }, el('span', { class: 'pill lime' }, 'Ждёт откликов')),
       el('h1', {}, o.title),
-      el('div', { class: 'muted' }, label(SPECS, o.category)),
-      el('div', { class: 'row' }, `Тираж: ${o.quantity} ед.`),
-      o.budget_per_unit != null ? el('div', { class: 'row' }, `Бюджет: ${money(o.budget_per_unit)} за ед.`) : null,
-      o.deadline ? el('div', { class: 'row' }, `Срок: до ${date(o.deadline)}`) : null,
-      el('div', { class: 'row' }, o.material_by === 'workshop' ? 'Материал — цеха' : 'Материал — заказчика'),
+      facts([
+        ['Категория', label(SPECS, o.category)],
+        ['Тираж', `${Number(o.quantity).toLocaleString('ru-RU')} ед.`],
+        ['Бюджет', o.budget_per_unit != null ? `${money(o.budget_per_unit)}/ед.` : null],
+        ['Срок', o.deadline ? `до ${date(o.deadline)}` : null],
+        ['Материал', o.material_by === 'workshop' ? 'Материал цеха' : 'Материал заказчика'],
+      ]),
       o.description ? el('p', {}, o.description) : null,
       openAppButton(`o=${id}`),
       el('p', { class: 'note muted' }, 'Откликнуться может цех с аккаунтом в приложении.')),
@@ -145,14 +189,13 @@ async function vacancy(id) {
   if (digits.length === 9) digits = '996' + digits;
   const text = encodeURIComponent(`Здравствуйте! Пишу по вакансии «${pos}» в «${w.name || ''}» (Швейная сеть КР).`);
   show(el('div', { class: 'card' },
+      el('div', { class: 'status' }, el('span', { class: 'pill lime' }, 'Вакансия')),
       el('h1', {}, pos),
       el('div', { class: 'muted' }, [w.name, w.city].filter(Boolean).join(' · ')),
-      v.salary ? el('div', { class: 'row' }, `Оплата: ${v.salary}`) : null,
-      v.schedule ? el('div', { class: 'row' }, `График: ${v.schedule}`) : null,
+      facts([['Оплата', v.salary], ['График', v.schedule]]),
       v.description ? el('p', {}, v.description) : null,
       digits ? el('a', { class: 'btn primary', href: `https://wa.me/${digits}?text=${text}` }, 'Написать в WhatsApp') : null,
-      el('a', { class: 'btn outline', href: `intent://open?v=${id}#Intent;scheme=nsw;package=${PACKAGE};S.browser_fallback_url=${encodeURIComponent(location.href)};end` },
-        'Открыть в приложении')),
+      openAppButton(`v=${id}`, digits ? 'outline' : 'primary')),
     about());
 }
 
@@ -160,8 +203,8 @@ async function vacancy(id) {
   const [kind, id] = [['w', workshop], ['o', order], ['v', vacancy]].map(([k, f]) => [f, params.get(k)]).find(([, v]) => v) || [];
   try {
     if (id && UUID.test(id)) await kind(id);
-    else show(el('div', { class: 'card' }, el('h1', {}, 'Швейная сеть КР'),
-      el('p', {}, 'Цехи, заказы и вакансии швейной отрасли Кыргызстана в одном приложении.')), about());
+    else show(el('div', { class: 'card' }, el('h1', {}, 'Цехи, заказы и вакансии'),
+      el('p', { class: 'muted' }, 'Швейная отрасль Кыргызстана в одном приложении.')), about());
   } catch (e) {
     show(el('div', { class: 'card' }, el('h1', {}, 'Не удалось загрузить'), el('p', { class: 'muted' }, 'Проверьте интернет и обновите страницу.')));
   }
